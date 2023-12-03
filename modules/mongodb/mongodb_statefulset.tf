@@ -9,7 +9,7 @@ resource "kubernetes_stateful_set" "mongodb_statefulset" {
   }
 
   spec {
-    replicas = 3  # Set the number of replicas in the replica set
+    replicas = 2  # Set the number of replicas in the replica set
 
     selector {
       match_labels = {
@@ -57,6 +57,12 @@ resource "kubernetes_stateful_set" "mongodb_statefulset" {
             value = "rs0"  # Name of the replica set
           }
 
+          # Additional environment variable for the keyfile
+/*           env {
+            name  = "MONGO_INITDB_KEYFILE"
+            value = "/etc/mongodb-keyfile/mongodb-keyfile"
+          } */
+
           # MongoDB port configuration
           port {
             container_port = 27017
@@ -67,6 +73,12 @@ resource "kubernetes_stateful_set" "mongodb_statefulset" {
             mount_path = "/data/db"
             name       = "mongodb-volume"
           }
+          
+/*           volume_mount {
+            name       = "mongodb-keyfile"
+            mount_path = "/etc/mongodb-keyfile"
+            read_only  = true
+          } */
 
           # MongoDB liveness and readiness probes
           liveness_probe {
@@ -94,6 +106,12 @@ resource "kubernetes_stateful_set" "mongodb_statefulset" {
           run_as_non_root = true
           fs_group        = 999
         }
+        volume {
+          name = "mongodb-keyfile"
+          secret {
+            secret_name = kubernetes_secret.mongodb_keyfile.metadata[0].name
+          }
+        }        
       }
     }
 
@@ -106,7 +124,7 @@ resource "kubernetes_stateful_set" "mongodb_statefulset" {
         access_modes = ["ReadWriteOnce"]
         resources {
           requests = {
-            storage = "5Gi"
+            storage = var.storage_size
           }
         }
       }
