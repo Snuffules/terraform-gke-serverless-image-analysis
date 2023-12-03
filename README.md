@@ -68,17 +68,25 @@ This repository contains Terraform configuration for deploying a MongoDB instanc
 - Already created, could consider generate your own if there is an issue.
 - Keyfile Owner: The keyfile should be owned by the MongoDB user. If you’re running MongoDB as a service, this user is typically mongodb or mongod. Please ensure that your keyfile is owned by the correct user. In this solution  user is: mongouser
 
-### Mongodb-authentication:
+### Mongodb-authentication. You have to choose one of the following:
 #### mongodb-keyfile used from mongodb replicas and encoded with filebase64:
   data = {
     keyfile = filebase64("${path.module}/mongodb-keyfile")
   }
+##### USage of mongodb-keyfile considerations:
+The MongoDB keyfile should be owned by the MongoDB user. In the context of a Kubernetes deployment, this would typically be the user that the MongoDB container is running as.
+
+ When using a keyfile for authentication in a MongoDB replica set, the keyfile itself `<mongodb_keyfile.tf>`is the shared secret used for authentication, not the username and password.
+
+If you want to use both a keyfile and a username/password for authentication, you would need to configure MongoDB to support this. This typically involves creating a MongoDB user that has the necessary roles and privileges, and then using this user’s credentials along with the keyfile when connecting to the MongoDB replica set.
 
 #### user and password stored with sensitive = true and encoded with base64encode option:
   data = {
     username = base64encode(var.mongo_user)
     password = base64encode(var.mongo_password)
   }
+##### Usage of user and password consideration:
+In Kubernetes secret resource `<modules/mongodb/mongo_secret.tf>`, you’re storing the MongoDB username and password. This is good for scenarios where you want to authenticate with a username and password.
 
 ### Buildx
 - This is suggested to use when to use, instead of docker build(deprecated): `<https://github.com/docker/buildx#manual-download>`
