@@ -1,0 +1,7 @@
+google-cloud-storage==2.13.0
+google-cloud-vision==3.4.5
+google-cloud-pubsub==2.18.4
+Pillow==10.1.0
+pymongo==4.6.0
+grpcio==1.59.3
+

@@ -1,0 +1,51 @@
+
+"""
+Cloud Function to be triggered by cloud storage event from image_handler_tr bucket.
+Processes the images by checking against google Vision AI dataset and then if non-violent send Pub/Sub message.
+All images analysis details are inserted in db "mongodb" and collection "violence_score". You could change names in lines 69-70.
+Create db and collection when new documented is inserted.
+"""
+
+Why using: from concurrent import futures 
+
+Brief explanation: encapsulate the asynchronous execution of a callable and allow you to check on the callable’s status and result
+
+ publish_futures and the get_callback function. 
+ 
+Key reasons and benefits of using futures in this context:
+
+Asynchronous Publishing:
+
+  Function imageAnalysis processes an image and, based on the violent score, potentially publishes a message to a Pub/Sub topic. 
+  This publishing action is asynchronous. When you call publisher.publish(), 
+  it returns a Future object immediately, without waiting for the publishing action to complete. 
+  This allows your function to continue executing other tasks without blocking on the completion of the publish operation.
+
+Tracking the Publishing Process:
+
+ The Future objects in publish_futures represent the ongoing publishing tasks.
+ By adding the Future objects returned by publisher.publish() to the publish_futures list,
+ effectively keeping track of these asynchronous tasks.
+
+Handling Results and Timeouts: 
+
+ The get_callback function creates a closure that is attached to each Future object through the add_done_callback method.
+ This closure will be called once the future is completed.
+ Inside this closure, attempt to get the result of the future is made, with a timeout (publish_future.result(timeout=60)).
+ This allows handling both the successful completion of the publish action and the scenario where publishing times out,
+ without blocking the main execution flow of your function.
+
+Waiting for All Publish Actions:
+
+ The line futures.wait(publish_futures, return_when=futures.ALL_COMPLETED) is used to wait for all the asynchronous publish actions to complete before your function exits.
+ This ensures that all messages have either been successfully published or have timed out before the function ends its execution.
+
+Efficiency and Responsiveness:
+
+ By using asynchronous publishing and futures, function can remain responsive and efficient.
+ It doesn't block on network I/O operations (which can be slow), and it can handle multiple publishing actions concurrently.
+
+ futures are used in this code to:
+  - efficiently manage and track asynchronous network I/O operations (publishing to Pub/Sub)
+  - allowing your Cloud Function to handle these operations without blocking the main execution flow
+  - manage the lifecycle of these operations through callbacks and waiting mechanisms.
