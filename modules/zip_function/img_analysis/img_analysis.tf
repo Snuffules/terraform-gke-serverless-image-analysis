@@ -87,9 +87,9 @@ resource "google_storage_bucket_object" "img-analysis-object" {
   source = data.archive_file.img_analysis.output_path # Add path to the zipped function source code
 }
 
-##########################################################
-# Cloud function v1 (VPC Access can be used only with v1)
-##########################################################
+####################################################################################################
+# Cloud function v1 (VPC Access can be used only with v1) | Trigger is upload event in cloud storage
+####################################################################################################
 
 resource "google_cloudfunctions_function" "img_analysis" {
   name        = var.name
