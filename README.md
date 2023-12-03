@@ -75,7 +75,7 @@ mongodb://mongouser:mongopassword@<mongodb.svc.cluster.local>:27017/<test>?authS
 - This is suggested to use when you use docker build: `<https://github.com/docker/buildx#manual-download>`
 
 ### Remote State Configuration
-Uncomment `backend.tf` and apply the Terraform configuration again.  `remote_state.tf` is creating remote cloud storage for tfsate with versioning and encryption.
+Uncomment `backend.tf` and apply the Terraform configuration again.  `remote_state.tf` is creating remote cloud storage for tfstate with versioning and encryption.
 
 ### Required APIs
 Enable the following APIs for the project:
