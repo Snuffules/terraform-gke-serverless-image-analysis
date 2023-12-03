@@ -58,10 +58,10 @@ resource "kubernetes_stateful_set" "mongodb_statefulset" {
           }
 
           # Additional environment variable for the keyfile
-/*           env {
+          env {
             name  = "MONGO_INITDB_KEYFILE"
             value = "/etc/mongodb-keyfile/mongodb-keyfile"
-          } */
+          }
 
           # MongoDB port configuration
           port {
@@ -73,12 +73,12 @@ resource "kubernetes_stateful_set" "mongodb_statefulset" {
             mount_path = "/data/db"
             name       = "mongodb-volume"
           }
-          
-/*           volume_mount {
+
+          volume_mount {
             name       = "mongodb-keyfile"
             mount_path = "/etc/mongodb-keyfile"
             read_only  = true
-          } */
+          }
 
           # MongoDB liveness and readiness probes
           liveness_probe {
