@@ -1,0 +1,10 @@
+resource "kubernetes_secret" "mongodb_keyfile" {
+  metadata {
+    name      = "mongodb-keyfile"
+    namespace = var.namespace
+  }
+
+  data = {
+    keyfile = filebase64("${path.module}/mongodb-keyfile")
+  }
+}
