@@ -100,9 +100,9 @@ The mongodb-keyfile is used for intra-cluster authentication in a MongoDB Replic
 When deploying MongoDB in Kubernetes using StatefulSets, the keyfile is typically stored as a Kubernetes Secret and mounted into the containers as a volume. This approach secures the keyfile and makes it easily accessible to the MongoDB instances in your cluster.
 
 ### Mongodb-authentication. You have to choose one of the following:
-#### mongodb-keyfile used from mongodb replicas and encoded with filebase64:
+#### mongodb-keyfile used from mongodb replicas and encoded during creation (openssl rand -base64 756 > mongodb-keyfile):
   data = {
-    keyfile = filebase64("${path.module}/mongodb-keyfile")
+    keyfile = "${path.module}/mongodb-keyfile"
   }
 ##### Use of mongodb-keyfile considerations:
 The MongoDB keyfile should be owned by the MongoDB user. In the context of a Kubernetes deployment, this would typically be the user that the MongoDB container is running as.
@@ -111,10 +111,10 @@ The MongoDB keyfile should be owned by the MongoDB user. In the context of a Kub
 
 If you want to use both a keyfile and a username/password for authentication, you would need to configure MongoDB to support this. This typically involves creating a MongoDB user that has the necessary roles and privileges, and then using this user’s credentials along with the keyfile when connecting to the MongoDB replica set.
 
-#### user and password stored with sensitive = true and encoded with base64encode option:
+#### user and password stored with sensitive = true option:
   data = {
-    username = base64encode(var.mongo_user)
-    password = base64encode(var.mongo_password)
+    username = var.mongo_user
+    password = var.mongo_password
   }
   
 ##### Use of user and password consideration:
@@ -165,7 +165,7 @@ Configure the VPC connector in Cloud Functions for internal access.
 ### Additional Configuration Notes
 - Consider using Cloud Run as an API Gateway to GKE.
 - If `enable_private_endpoint` is set to `true`, ensure proper configuration for accessing the GKE API. Bastion machine or VPN is needed. Not applicable for this solution.
-- Update the JSON data for source and destination buckets in Cloud Functions as needed.
+- Update the JSON data for source and destination buckets in Cloud Functions if needed.
 
 ## To Do
 - Assign service account permissions.
@@ -177,7 +177,7 @@ Configure the VPC connector in Cloud Functions for internal access.
 - Add indexing based on violence_score record 1-10
   
 ## Done
-- Test `enable_private_endpoint = true` and `private_ip_google_access = true`. 
+- Tested `enable_private_endpoint = true` and `private_ip_google_access = true`. Bastion machine or VPN is needed. Not applicable for this solution.
 
 ## Successful MongoDB Insertion
 Example of a successful record insertion into MongoDB.
