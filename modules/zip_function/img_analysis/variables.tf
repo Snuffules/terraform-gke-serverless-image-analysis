@@ -25,9 +25,7 @@ variable "description" {
 variable "labels" {
   description = "A set of key/value label pairs associated with this Cloud Function."
   type        = map(string)
-  default     = { #To be tested
-/*       app     = "mongodb-app"
-      release = 1     */
+  default     = { 
   }
 }
 
@@ -94,9 +92,3 @@ variable "mongonetwork" {
 variable "load_balancer_ip" {
 }
 
-/* variable "mongodb_uri" {
-  default = "mongodb://mongouser:mongopassword@mongo-hl.mongodb.svc.cluster.local:27017/?authSource=admin&authMechanism=SCRAM-SHA-256"
-  description = "URI for MongoDB"
-  sensitive = true  
-  type        = string
-} */
