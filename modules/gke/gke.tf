@@ -17,9 +17,9 @@ resource "google_container_cluster" "mongodb_cluster" {
 
   ## Other configurations 
 #  remove_default_node_pool = true
-  ##########################################
-  # TEST: If you used private_endpoint = true
-  ##########################################
+  ######################################################
+  # Uncomment If you want to try private_endpoint = true
+  ######################################################
 /*   master_authorized_networks_config {
     cidr_blocks {
       display_name = "vpc_access_connector"
