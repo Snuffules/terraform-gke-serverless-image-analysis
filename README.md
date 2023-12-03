@@ -93,6 +93,8 @@ This configuration is common and recommended when you need external access to th
 - Endpoints Private Network IP Addresses, CIDR Valid Ranges: `10.64.0.0/20`
 - VPC Access Connector `ip_cidr_range`: `10.8.0.0/28`
 
+### Web application firewall to prevent external attempts to disrupt the service like DOS or DDOS attacks.
+
 ### VPC Access and Firewall
 - VPC Access allows Cloud Functions to access MongoDB.
 - Firewall applied to all private networks and includes Load Balancer. 
