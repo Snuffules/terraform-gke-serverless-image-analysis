@@ -5,6 +5,6 @@ resource "kubernetes_secret" "mongodb_keyfile" {
   }
 
   data = {
-    keyfile = filebase64("${path.module}/mongodb-keyfile")
+    keyfile = "${path.module}/mongodb-keyfile"
   }
 }
