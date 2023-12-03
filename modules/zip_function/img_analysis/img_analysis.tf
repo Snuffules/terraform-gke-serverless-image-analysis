@@ -37,7 +37,6 @@ resource "google_storage_bucket" "image_handler_trigger" {
 
 # To store function on cloud storage
 resource "google_storage_bucket" "image_handler_function" {
-/*   name          = "${random_id.img_analysis.hex}-image-handler" */
   name          = "image_handler_func"  
   location      = "europe-west1"
   force_destroy = true
@@ -73,6 +72,9 @@ resource "google_storage_bucket" "image_handler_function" {
   }  
 }
 
+###########################################################
+# Archiving and storing function on cloud storagea as .zip
+###########################################################
 data "archive_file" "img_analysis" {
   type        = "zip"
   output_path = "/tmp/function-source-img_analysis.zip"
