@@ -1,19 +1,14 @@
 data "google_storage_project_service_account" "default" {
 }
 
-/* resource "random_id" "img_analysis" {
-  byte_length = 8
-} */
-
 # Trigger bucket
 resource "google_storage_bucket" "image_handler_trigger" {
-/*   name          = "${random_id.img_analysis.hex}-image-handler" */
   name          = "image_handler_tr"  
   location      = "europe-west1"
   force_destroy = true
   project = var.project_id
   uniform_bucket_level_access = true    
- #  public_access_prevention = "enforced" 
+  public_access_prevention = "enforced" 
 
   website {
     main_page_suffix = "index.html"
@@ -81,8 +76,6 @@ resource "google_storage_bucket" "image_handler_function" {
   }  
 }
 
-################################################################################
-
 data "archive_file" "img_analysis" {
   type        = "zip"
   output_path = "/tmp/function-source-img_analysis.zip"
@@ -94,7 +87,9 @@ resource "google_storage_bucket_object" "img-analysis-object" {
   source = data.archive_file.img_analysis.output_path # Add path to the zipped function source code
 }
 
-#####################################################################################################
+##########################################################
+# Cloud function v1 (VPC Access can be used only with v1)
+##########################################################
 
 resource "google_cloudfunctions_function" "img_analysis" {
   name        = var.name
