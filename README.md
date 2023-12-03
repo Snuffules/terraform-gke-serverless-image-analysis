@@ -48,7 +48,7 @@ This repository contains Terraform configuration for deploying a MongoDB instanc
 ### MongoDB URI
 #### Working URI format:
 
-- `<mongodb://mongouser:mongopassword@<mongodb.svc.cluster.local>:27017/<test>?authSource=admin&authMechanism=SCRAM-SHA-256>`
+#### `<mongodb://mongouser:mongopassword@<mongodb.svc.cluster.local>:27017/<test>?authSource=admin&authMechanism=SCRAM-SHA-256>`
 
 - Replace `<mongodb.svc.cluster.local>` with the Load Balancer IP or directly with the Pod IP endpoint for `mongodb-0`.
 - Database name `<test>` can be replaced with `<default>` or `<config>`.
@@ -69,18 +69,18 @@ This repository contains Terraform configuration for deploying a MongoDB instanc
 
 ### Mongodb-authentication:
 #### mongodb-keyfile used from mongodb replicas and encoded with filebase64:
-- data = {
-  - keyfile = filebase64("${path.module}/mongodb-keyfile")
-- }
+  data = {
+    keyfile = filebase64("${path.module}/mongodb-keyfile")
+  }
 
 #### user and password stored with sensitive = true and encoded with base64encode option:
-- data = {
-  - username = base64encode(var.mongo_user)
-  - password = base64encode(var.mongo_password)
-- }
+  data = {
+    username = base64encode(var.mongo_user)
+    password = base64encode(var.mongo_password)
+  }
 
 ### Buildx
-- This is suggested to use when you use docker build: `<https://github.com/docker/buildx#manual-download>`
+- This is suggested to use when to use, instead of docker build(deprecated): `<https://github.com/docker/buildx#manual-download>`
 
 ### Remote State Configuration
 #### Uncomment `backend.tf` and apply the Terraform configuration again.  `remote_state.tf` is creating remote cloud storage for tfstate with versioning and encryption.
