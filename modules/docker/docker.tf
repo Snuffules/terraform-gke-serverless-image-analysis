@@ -15,13 +15,13 @@ terraform {
   }
 }
 
-/* provider "docker" {
+provider "docker" {
   host = "unix:///var/run/docker.sock"
   registry_auth {
     address = "eu.gcr.io"
     config_file = pathexpand("${path.module}/config.json")  
  }
-} */
+}
 
 resource "null_resource" "docker_build" {
 
