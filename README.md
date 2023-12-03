@@ -159,6 +159,7 @@ Configure the VPC connector in Cloud Functions for internal access.
 - Add addiitonal monitoring
 - Add visual Dashboards to represent MongoDB record numbers
 - Add indexing based on violence_score record 1-10
+- Mongodb-key authentication along with user and password. Authentication issue, need to be investigated
   
 ## Done
 - Test `enable_private_endpoint = true` and `private_ip_google_access = true`. 
