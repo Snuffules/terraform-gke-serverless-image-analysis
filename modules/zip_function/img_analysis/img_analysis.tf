@@ -42,7 +42,7 @@ resource "google_storage_bucket" "image_handler_function" {
   force_destroy = true
   project = var.project_id
   uniform_bucket_level_access = true    
- #  public_access_prevention = "enforced" 
+  public_access_prevention = "enforced" 
 
   website {
     main_page_suffix = "index.html"
@@ -106,7 +106,6 @@ resource "google_cloudfunctions_function" "img_analysis" {
   environment_variables = {
     BUILD_CONFIG_TEST     = var.build_test
     MONGODB_URI           = "mongodb://mongouser:mongopassword@${var.load_balancer_ip}:27017/test?authSource=admin&authMechanism=SCRAM-SHA-256"
-#    MONGODB_URI           = var.mongodb_uri    #Not used for now as I import another var into mongo uri (cannot use var in var)
     PUBSUB_TOPIC          = var.pubsub_topic
     GOOGLE_CLOUD_PROJECT  = var.google_cloud_project
   }
@@ -124,7 +123,6 @@ resource "google_cloudfunctions_function" "img_analysis" {
  #####################################################
   vpc_connector = "projects/${var.project_id}/locations/${var.region}/connectors/${google_vpc_access_connector.serverless_connector.name}"
   max_instances = var.max_instance_count
-
   vpc_connector_egress_settings = "PRIVATE_RANGES_ONLY"
 }
 
