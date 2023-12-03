@@ -83,19 +83,19 @@ This repository contains Terraform configuration for deploying a MongoDB instanc
 The mongodb-keyfile is used for intra-cluster authentication in a MongoDB Replica Set or Sharded Cluster. It serves as a shared secret between the members of the cluster, ensuring that only authorized nodes can join and participate in the cluster. This keyfile is crucial for maintaining the security and integrity of the cluster.
 
 - Authentication Mechanism: 
-The keyfile is used as a mechanism for internal authentication among the nodes of a MongoDB deployment. When you set up a Replica Set or Sharded Cluster, each node in the cluster needs to authenticate with the others to be trusted and allowed to participate. The keyfile provides a shared secret that all nodes use to authenticate each other.
+  - The keyfile is used as a mechanism for internal authentication among the nodes of a MongoDB deployment. When you set up a Replica Set or Sharded Cluster, each node in the cluster needs to authenticate with the others to be trusted and allowed to participate. The keyfile provides a shared secret that all nodes use to authenticate each other.
 
 - Security:
   - The keyfile contains a randomly generated string, which acts as a shared password. All members of the Replica Set or Sharded Cluster must have access to the same keyfile. This ensures that an unauthorized node cannot join the cluster without having the correct keyfile.
 
 - Consistency:
-The keyfile should be consistent across all members. Any change to the keyfile requires a corresponding update on all nodes in the cluster.
+  - The keyfile should be consistent across all members. Any change to the keyfile requires a corresponding update on all nodes in the cluster.
 
 - Permissions:
-For security reasons, the keyfile should have strict file permissions. Typically, it should be readable only by the user that runs the MongoDB process (often mongodb user in Unix systems). This is why you often see chmod 600 used to set the permissions, allowing only the owner read and write access to the file.
+  - For security reasons, the keyfile should have strict file permissions. Typically, it should be readable only by the user that runs the MongoDB process (often mongodb user in Unix systems). This is why you often see chmod 600 used to set the permissions, allowing only the owner read and write access to the file.
 
 - Format:
-The keyfile can be a plain text file containing any string of characters, but it is recommended to use a strong, randomly-generated string for security purposes.
+  - The keyfile can be a plain text file containing any string of characters, but it is recommended to use a strong, randomly-generated string for security purposes.
 
 When deploying MongoDB in Kubernetes using StatefulSets, the keyfile is typically stored as a Kubernetes Secret and mounted into the containers as a volume. This approach secures the keyfile and makes it easily accessible to the MongoDB instances in your cluster.
 
