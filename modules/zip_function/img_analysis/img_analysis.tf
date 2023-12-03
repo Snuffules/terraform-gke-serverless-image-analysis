@@ -1,6 +1,3 @@
-data "google_storage_project_service_account" "default" {
-}
-
 # Trigger bucket
 resource "google_storage_bucket" "image_handler_trigger" {
   name          = "image_handler_tr"  
