@@ -37,6 +37,14 @@ This repository contains Terraform configuration for deploying a MongoDB instanc
 
 ## Configuration Details
 
+### Authenticate Terraform with google cloud:
+#### Authenticate with google cloud:
+- gcloud auth application-default login
+#### Connect to google kubernetes engine:
+- gcloud container clusters get-credentials mongo-cluster --region europe-west1 --project serverless-violence-score
+#### Connect to mongodb server via mongodb-0 (first replica):
+- kubectl exec -ti mongodb-0 -n mongodb -- mongosh 
+
 ### MongoDB URI
 Working URI format:
 
