@@ -1,7 +1,7 @@
 resource "kubernetes_secret" "mongo_secret" {
   metadata {
     name      = "mongo-secret"
-    namespace = "mongodb"
+    namespace = var.nms
   }
 
   data = {
