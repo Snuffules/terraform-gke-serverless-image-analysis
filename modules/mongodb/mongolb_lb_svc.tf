@@ -32,7 +32,7 @@ resource "kubernetes_service" "mongo_lb_svc" {
 #    cluster_ip  = "None"  # This makes the service headless
 
     # NodePort has limitation to 30000-32767 ports only. Ingress will expose to public internet.
-    # Therefore, LoadBalancer should be best choice to expose over the network. This also exposes to public internet, so k8s endpoint and vpc access should be enough
+    # Therefore, LoadBalancer should be best choice to expose over the network. It is included in Firewall for additional protection and allowing only 27017 port.
     publish_not_ready_addresses = true
   }
 } 
