@@ -74,14 +74,30 @@ This repository contains Terraform configuration for deploying a MongoDB instanc
 - Automatically create a new database and collection upon inserting a new document. 
 
 ### Mongodb-key:
-#### This will go into TO DO list. Current implementation do not allow authentication.
-#### Use of user and password will be default way of authenticating.
-
-Image-Analysis-sourceulx144km778b ERROR:root:An error occurred while connecting to MongoDB: Authentication failed., full error: {'ok': 0.0, 'errmsg': 'Authentication failed.', 'code': 18, 'codeName': 'AuthenticationFailed'} 
-
+#### Use of mongodb-keyfile compliments user and password authentication.
 - openssl rand -base64 756 > mongodb-keyfile
 - Already created, could consider generate your own if there is an issue.
 - Keyfile Owner: The keyfile should be owned by the MongoDB user. If you’re running MongoDB as a service, this user is typically mongodb or mongod. Please ensure that your keyfile is owned by the correct user. In this solution  user is: mongouser
+
+#### Reasons behind using a keyfile to secure your gke cluster:
+The mongodb-keyfile is used for intra-cluster authentication in a MongoDB Replica Set or Sharded Cluster. It serves as a shared secret between the members of the cluster, ensuring that only authorized nodes can join and participate in the cluster. This keyfile is crucial for maintaining the security and integrity of the cluster.
+
+##### Authentication Mechanism: 
+The keyfile is used as a mechanism for internal authentication among the nodes of a MongoDB deployment. When you set up a Replica Set or Sharded Cluster, each node in the cluster needs to authenticate with the others to be trusted and allowed to participate. The keyfile provides a shared secret that all nodes use to authenticate each other.
+
+##### Security:
+The keyfile contains a randomly generated string, which acts as a shared password. All members of the Replica Set or Sharded Cluster must have access to the same keyfile. This ensures that an unauthorized node cannot join the cluster without having the correct keyfile.
+
+##### Consistency:
+The keyfile should be consistent across all members. Any change to the keyfile requires a corresponding update on all nodes in the cluster.
+
+##### Permissions:
+For security reasons, the keyfile should have strict file permissions. Typically, it should be readable only by the user that runs the MongoDB process (often mongodb user in Unix systems). This is why you often see chmod 600 used to set the permissions, allowing only the owner read and write access to the file.
+
+##### Format:
+The keyfile can be a plain text file containing any string of characters, but it is recommended to use a strong, randomly-generated string for security purposes.
+
+When deploying MongoDB in Kubernetes using StatefulSets, the keyfile is typically stored as a Kubernetes Secret and mounted into the containers as a volume. This approach secures the keyfile and makes it easily accessible to the MongoDB instances in your cluster.
 
 ### Mongodb-authentication. You have to choose one of the following:
 #### mongodb-keyfile used from mongodb replicas and encoded with filebase64:
