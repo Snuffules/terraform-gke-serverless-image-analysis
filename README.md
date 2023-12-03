@@ -86,7 +86,7 @@ The mongodb-keyfile is used for intra-cluster authentication in a MongoDB Replic
 The keyfile is used as a mechanism for internal authentication among the nodes of a MongoDB deployment. When you set up a Replica Set or Sharded Cluster, each node in the cluster needs to authenticate with the others to be trusted and allowed to participate. The keyfile provides a shared secret that all nodes use to authenticate each other.
 
 - Security:
-The keyfile contains a randomly generated string, which acts as a shared password. All members of the Replica Set or Sharded Cluster must have access to the same keyfile. This ensures that an unauthorized node cannot join the cluster without having the correct keyfile.
+  - The keyfile contains a randomly generated string, which acts as a shared password. All members of the Replica Set or Sharded Cluster must have access to the same keyfile. This ensures that an unauthorized node cannot join the cluster without having the correct keyfile.
 
 - Consistency:
 The keyfile should be consistent across all members. Any change to the keyfile requires a corresponding update on all nodes in the cluster.
