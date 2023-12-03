@@ -66,6 +66,7 @@ This repository contains Terraform configuration for deploying a MongoDB instanc
 ### Mongodb-key:
 - openssl rand -base64 756 > mongodb-keyfile
 - Already created, could consider generate your own if there is an issue.
+- Keyfile Owner: The keyfile should be owned by the MongoDB user. If you’re running MongoDB as a service, this user is typically mongodb or mongod. Please ensure that your keyfile is owned by the correct user. In this solution  user is: mongouser
 
 ### Mongodb-authentication:
 #### mongodb-keyfile used from mongodb replicas and encoded with filebase64:
