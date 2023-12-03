@@ -16,3 +16,7 @@ variable "mongo_password" {
     default = "mongopassword"
     sensitive = true    
 }
+variable "storage_size" {
+    default = "10Gi"
+    sensitive = true    
+}
