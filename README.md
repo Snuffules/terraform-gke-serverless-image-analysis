@@ -4,6 +4,31 @@
 ## Overview
 This repository contains Terraform configuration for deploying a MongoDB instance on Google Kubernetes Engine (GKE) with a Google Cloud Function for image analysis. The setup includes a VPC Access Connector for secure communication.
 
+## StatefulSet is used instead of Deployment or ReplicaSet. 
+### Reasons:
+- When you use a StatefulSet, you don’t need a ReplicaSet.
+
+- StatefulSet and ReplicaSet serve different purposes in Kubernetes. A ReplicaSet ensures that a specified number of pod replicas are running at any given time. However, they do not provide any guarantees about the ordering or uniqueness of these pods. It’s a good choice when you want to have multiple identical pods and don’t need to distinguish between them.
+
+- On the other hand, a StatefulSet is a better choice when you need to maintain the state and identity of each pod. StatefulSets manage the deployment and scaling of a set of Pods and provide guarantees about the ordering and uniqueness of these Pods. Unlike a Deployment or ReplicaSet, a StatefulSet maintains a sticky, stable identity for each of their Pods. These pods are created from the same spec, but they are not interchangeable: each one has a persistent identifier that it maintains across any reschedulings.
+
+- So, if you’re managing stateful applications like databases that require stable network identifiers, stable persistent storage, and ordered, graceful deployment and scaling,   you’d use a StatefulSet.
+
+- In this case, since we are using MongoDB which is a stateful application, using a StatefulSet is the appropriate choice.
+
+## Pvc and persistand disk usage.
+### Reasons:
+- In a StatefulSet, each pod gets its own Persistent Volume Claim (PVC), which means each pod will have its own storage. This is different from Deployments or ReplicaSets, where the pods share storage.
+
+### One active entrypoint, multiple copies of the database:
+- When you have 2 replicas in a StatefulSet, you will have 2 pods, each with its own PVC. This means that each pod will have its own separate copy of the database.
+
+### No duplication, but replication of data:
+- In a MongoDB replica set, one node is the primary node that receives all write operations, while the other nodes are secondary nodes that replicate the primary node’s data set. This means that the database records will not duplicate across the PVCs, but rather, the secondary nodes will have a copy of the data from the primary node.
+
+### Data peristancy:
+- The data will persist on the PVCs, and the PVCs will exist independently of the pod lifecycle. This means that even if a pod dies, the PVC will still exist and can be mounted to another pod. This is particularly useful for stateful applications like databases, where data persistence is important.
+
 ## Timings
 - GKE Creation Time: 6:50m - 7:10m
 - MongoDB StatefulSet: 1 minute
@@ -29,6 +54,25 @@ mongodb://mongouser:mongopassword@<mongodb.svc.cluster.local>:27017/<test>?authS
 - VPC Access allows Cloud Functions to access MongoDB.
 - Firewall applied to all private networks and includes Load Balancer. 
 - Automatically create a new database and collection upon inserting a new document. 
+
+### Mongodb-key:
+- openssl rand -base64 756 > mongodb-keyfile
+- Already created, could consider generate your own if there is an issue.
+
+### Mongodb-authentication:
+- 1. mongodb-keyfile used from mongodb replicas and encoded with filebase64:
+-  data = {
+-    keyfile = filebase64("${path.module}/mongodb-keyfile")
+-  }
+
+- 2. user and password stored with sensitive = true and encoded with base64encode option:
+-  data = {
+-    username = base64encode(var.mongo_user)
+-    password = base64encode(var.mongo_password)
+-  }
+
+### Buildx
+- This is suggested to use when you use docker build: `<https://github.com/docker/buildx#manual-download>`
 
 ### Remote State Configuration
 Uncomment `backend.tf` and apply the Terraform configuration again.  `remote_state.tf` is creating remote cloud storage for tfsate with versioning and encryption.
