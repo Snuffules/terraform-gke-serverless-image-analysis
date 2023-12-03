@@ -1,8 +1,3 @@
-/* resource "random_id" "img_processing" {
-  byte_length = 8
-}
- */
-
 # Trigger storage
 resource "google_storage_bucket" "safe_storage_trigger" {
 /*   name          = "${random_id.img_processing.hex}-safe-storage" */
