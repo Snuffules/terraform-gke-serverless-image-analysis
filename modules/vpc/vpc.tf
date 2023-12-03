@@ -12,9 +12,7 @@ resource "google_compute_subnetwork" "mongodb_subnet" {
   network       = google_compute_network.mongodb_network.self_link
   region        = var.region
   project       = var.project_id
-  ###############################
-  # TEST
-  ###############################
-#  private_ip_google_access = true  # Enable Private Google Access - TEST 
-  ###################################################################### 
+  ###################################################################################################################################################
+  #  private_ip_google_access = true  # Enable Private Google Access. If you want to try enable_public_endpoint you will need to uncomment this line. 
+  ###################################################################################################################################################
 }
