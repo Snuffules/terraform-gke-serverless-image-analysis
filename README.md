@@ -74,6 +74,11 @@ This repository contains Terraform configuration for deploying a MongoDB instanc
 - Automatically create a new database and collection upon inserting a new document. 
 
 ### Mongodb-key:
+#### This will go into TO DO list. Current implementation do not allow authentication.
+#### Use of user and password will be default way of authenticating.
+
+Image-Analysis-sourceulx144km778b ERROR:root:An error occurred while connecting to MongoDB: Authentication failed., full error: {'ok': 0.0, 'errmsg': 'Authentication failed.', 'code': 18, 'codeName': 'AuthenticationFailed'} 
+
 - openssl rand -base64 756 > mongodb-keyfile
 - Already created, could consider generate your own if there is an issue.
 - Keyfile Owner: The keyfile should be owned by the MongoDB user. If you’re running MongoDB as a service, this user is typically mongodb or mongod. Please ensure that your keyfile is owned by the correct user. In this solution  user is: mongouser
