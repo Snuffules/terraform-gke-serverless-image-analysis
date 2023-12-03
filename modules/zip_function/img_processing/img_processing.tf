@@ -1,12 +1,11 @@
 # Trigger storage
 resource "google_storage_bucket" "safe_storage_trigger" {
-/*   name          = "${random_id.img_processing.hex}-safe-storage" */
   name          = "safe_storage_tr"  
   location      = "europe-west1"
   force_destroy = true
   project = var.project_id
   uniform_bucket_level_access = true  
-/*   public_access_prevention = "enforced"   */
+  public_access_prevention = "enforced"
 
   website {
     main_page_suffix = "index.html"
@@ -105,10 +104,6 @@ resource "google_project_iam_member" "artifactregistry_reader" {
   depends_on = [google_project_iam_member.event_receiving]
 }
 
-################
-# Missing roles
-################
-
 resource "google_project_iam_member" "connectors_admin" {
   project    = var.project_id
   role       = "roles/connectors.admin"
@@ -149,6 +144,9 @@ resource "google_storage_bucket_object" "img-processing-object" {
   bucket = google_storage_bucket.safe_storage_function.name
   source = data.archive_file.img_processing.output_path # Add path to the zipped function source code
 }
+################################################################################################
+# Cloud function v2 (both funtions work independant from each other) | Trigger is pubsub message
+################################################################################################
 
 resource "google_cloudfunctions2_function" "img_processing" {
   name        = var.name
@@ -180,9 +178,9 @@ resource "google_cloudfunctions2_function" "img_processing" {
     ingress_settings               = var.ingress_settings
     service_account_email          = var.service_account
   }
-################################################################################
+#####################################################
 #  official guidance from google for strorage trigger
-################################################################################  
+######################################################
 
   event_trigger {
     trigger_region        = "europe-west1"
