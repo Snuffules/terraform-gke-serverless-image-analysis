@@ -53,6 +53,16 @@ This repository contains Terraform configuration for deploying a MongoDB instanc
 - Replace `<mongodb.svc.cluster.local>` with the Load Balancer IP or directly with the Pod IP endpoint for `mongodb-0`.
 - Database name `<test>` can be replaced with `<default>` or `<config>`.
 
+### Service account permissions are used only once in second function
+
+### Cloud function v1 and v2
+#### img_analysis cloudfunction (v1) - implemented a delay, to ensure pubsun topic is ready to accept messages
+- To implement VPC serverless access connect, so cloudfunction can authenticate and insert records into MongoDB `<db>` and `<collection>` (`<mongodb>` and `<violence_score>` respectively, change to your preference, if needed).
+
+#### img_processing cloudfunction (v2) 
+- Initially, both functions was v2. img_analysis refactoring to v1 allows use of VPC Serverless Access Connector, therefore was the right call. Cloudfunction2 options are more complicated and go beyond serveless concept.
+- Decision to leave img_processing cloud function as v2 seems as a good idea (for now at least) to test the concept of v1 and v2 functions. They work independent from each otehr, so there is no funtionality issues with this workflow.
+
 ### Network Configurations
 - Services Private Network IP Addresses, CIDR Valid Ranges: `10.68.0.0/28`
 - Endpoints Private Network IP Addresses, CIDR Valid Ranges: `10.64.0.0/20`
@@ -73,7 +83,7 @@ This repository contains Terraform configuration for deploying a MongoDB instanc
   data = {
     keyfile = filebase64("${path.module}/mongodb-keyfile")
   }
-##### USage of mongodb-keyfile considerations:
+##### Use of mongodb-keyfile considerations:
 The MongoDB keyfile should be owned by the MongoDB user. In the context of a Kubernetes deployment, this would typically be the user that the MongoDB container is running as.
 
  When using a keyfile for authentication in a MongoDB replica set, the keyfile itself `<mongodb_keyfile.tf>`is the shared secret used for authentication, not the username and password.
@@ -85,8 +95,10 @@ If you want to use both a keyfile and a username/password for authentication, yo
     username = base64encode(var.mongo_user)
     password = base64encode(var.mongo_password)
   }
-##### Usage of user and password consideration:
+  
+##### Use of user and password consideration:
 In Kubernetes secret resource `<modules/mongodb/mongo_secret.tf>`, you’re storing the MongoDB username and password. This is good for scenarios where you want to authenticate with a username and password.
+If you’re using both a keyfile and a username/password for authentication, you would still include the username and password in the connection string. The keyfile does not replace the username and password in the connection string.
 
 ### Buildx
 - This is suggested to use when to use, instead of docker build(deprecated): `<https://github.com/docker/buildx#manual-download>`
@@ -137,7 +149,12 @@ Configure the VPC connector in Cloud Functions for internal access.
 ## To Do
 - Assign service account permissions.
 - Verify the usage of some variables.
-
+- Add backup for pvc for disaster recovery
+- Add alarms for storage and implement autoscale policy triggered by alarm
+- Add addiitonal monitoring
+- Add visual Dashboards to represent MongoDB record numbers
+- Add indexing based on violence_score record 1-10
+  
 ## Done
 - Test `enable_private_endpoint = true` and `private_ip_google_access = true`. 
 
