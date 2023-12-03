@@ -43,7 +43,7 @@ resource "google_storage_bucket" "safe_storage_function" {
   force_destroy = true
   project = var.project_id
   uniform_bucket_level_access = true  
-/*   public_access_prevention = "enforced"   */
+  public_access_prevention = "enforced"
 
   website {
     main_page_suffix = "index.html"
@@ -132,5 +132,4 @@ resource "google_cloudfunctions2_function" "img_processing" {
     service_account_email = var.service_account
     pubsub_topic          = "projects/${var.project_id}/topics/my-topic"
   }
-  
 }
