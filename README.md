@@ -94,7 +94,12 @@ This configuration is common and recommended when you need external access to th
 - VPC Access Connector `ip_cidr_range`: `10.8.0.0/28`
 
 ### Web application firewall to prevent external attempts to disrupt the service like DOS or DDOS attacks.
-
+      config {
+        src_ip_ranges = ["10.8.0.0/28", "10.0.0.0/24", "10.0.1.0/28", var.load_balancer_ip]
+      }
+    }
+    description = "Allow traffic from specific IP range"
+  }
 ### VPC Access and Firewall
 - VPC Access allows Cloud Functions to access MongoDB.
 - Firewall applied to all private networks and includes Load Balancer. 
