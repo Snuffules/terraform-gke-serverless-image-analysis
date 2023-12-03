@@ -61,15 +61,15 @@ mongodb://mongouser:mongopassword@<mongodb.svc.cluster.local>:27017/<test>?authS
 
 ### Mongodb-authentication:
 -  mongodb-keyfile used from mongodb replicas and encoded with filebase64:
---  data = {
--    keyfile = filebase64("${path.module}/mongodb-keyfile")
--  }
+  data = {
+    keyfile = filebase64("${path.module}/mongodb-keyfile")
+  }
 
 -  user and password stored with sensitive = true and encoded with base64encode option:
---  data = {
--    username = base64encode(var.mongo_user)
--    password = base64encode(var.mongo_password)
--  }
+  data = {
+    username = base64encode(var.mongo_user)
+    password = base64encode(var.mongo_password)
+  }
 
 ### Buildx
 - This is suggested to use when you use docker build: `<https://github.com/docker/buildx#manual-download>`
