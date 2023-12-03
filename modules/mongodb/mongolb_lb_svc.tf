@@ -31,7 +31,7 @@ resource "kubernetes_service" "mongo_lb_svc" {
     cluster_ip  = "10.68.0.42"  # Predefined available range: The range of valid IPs is 10.68.0.0/20 
 #    cluster_ip  = "None"  # This makes the service headless
 
-    # NodePort has limitation to 30000-32767 ports only. Ingress will expose to public internet.
+    # NodePort has limitation to 30000-32767 ports only. Ingress will expose to public internet. LoadBalancer is used as we use created public address for mongo uri connection string.
     # Therefore, LoadBalancer should be best choice to expose over the network. It is included in Firewall for additional protection and allowing only 27017 port.
     publish_not_ready_addresses = true
   }
