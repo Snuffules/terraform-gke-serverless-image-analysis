@@ -69,24 +69,3 @@ resource "kubernetes_namespace" "mongodb" {
     name = "mongodb"
   }
 }
-
-/* enable_private_nodes: 
-
-When set to true, this option ensures that the nodes of the cluster do not have public IP addresses. 
-This means that the nodes are only accessible from within the Google Cloud network.
- This setting is often used to enhance the security of the cluster by ensuring that the nodes are not accessible from the public internet.
-
-enable_private_endpoint: 
-
-This option, when set to true, makes the Kubernetes API server accessible only from within the Google Cloud network.
- When set to false, the API server is accessible from the public internet, although it can still be secured and limited using authorized networks or other security mechanisms.
-
-In this case, with enable_private_nodes set to true and enable_private_endpoint set to false,
- you have a configuration where the nodes of your GKE cluster are only accessible within the Google Cloud network, 
- but the Kubernetes API server is accessible from the public internet. 
- This setup provides a balance between protecting the nodes from direct public access while still allowing easy management
-  of the cluster through the API server from outside the Google Cloud network.
-
-This configuration is common and recommended when you need external access to the Kubernetes API server 
-(like managing the cluster from a CI/CD pipeline outside Google Cloud) but still want to keep the workloads running on the nodes protected from direct public access.
- */
