@@ -17,7 +17,10 @@ This repository contains Terraform configuration for deploying a MongoDB instanc
 - In this case, since we are using MongoDB which is a stateful application, using a StatefulSet is the appropriate choice.
 
 ## Pvc and persistand disk usage.
-### Reasons:
+### If you need more size for pvc storage, simply change the size and Expansion future of kubernetes will resize without any downtime or data loss.
+This feature allows you to simply edit your PersistentVolumeClaim (PVC) objects and specify a new size in the PVC spec. Kubernetes will then automatically expand the volume using the storage backend and also expand the underlying file system in-use by the Pod without requiring any downtime.
+
+### Why we use persistent volume claim:
 - In a StatefulSet, each pod gets its own Persistent Volume Claim (PVC), which means each pod will have its own storage. This is different from Deployments or ReplicaSets, where the pods share storage.
 
 ### One active entrypoint, multiple copies of the database:
