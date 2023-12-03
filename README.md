@@ -46,9 +46,9 @@ This repository contains Terraform configuration for deploying a MongoDB instanc
 - kubectl exec -ti mongodb-0 -n mongodb -- mongosh 
 
 ### MongoDB URI
-Working URI format:
+#### Working URI format:
 
-mongodb://mongouser:mongopassword@<mongodb.svc.cluster.local>:27017/<test>?authSource=admin&authMechanism=SCRAM-SHA-256
+- `<mongodb://mongouser:mongopassword@<mongodb.svc.cluster.local>:27017/<test>?authSource=admin&authMechanism=SCRAM-SHA-256>`
 
 - Replace `<mongodb.svc.cluster.local>` with the Load Balancer IP or directly with the Pod IP endpoint for `mongodb-0`.
 - Database name `<test>` can be replaced with `<default>` or `<config>`.
@@ -68,12 +68,12 @@ mongodb://mongouser:mongopassword@<mongodb.svc.cluster.local>:27017/<test>?authS
 - Already created, could consider generate your own if there is an issue.
 
 ### Mongodb-authentication:
-- mongodb-keyfile used from mongodb replicas and encoded with filebase64:
+#### mongodb-keyfile used from mongodb replicas and encoded with filebase64:
 - data = {
   - keyfile = filebase64("${path.module}/mongodb-keyfile")
 - }
 
-- user and password stored with sensitive = true and encoded with base64encode option:
+#### user and password stored with sensitive = true and encoded with base64encode option:
 - data = {
   - username = base64encode(var.mongo_user)
   - password = base64encode(var.mongo_password)
@@ -83,10 +83,10 @@ mongodb://mongouser:mongopassword@<mongodb.svc.cluster.local>:27017/<test>?authS
 - This is suggested to use when you use docker build: `<https://github.com/docker/buildx#manual-download>`
 
 ### Remote State Configuration
-Uncomment `backend.tf` and apply the Terraform configuration again.  `remote_state.tf` is creating remote cloud storage for tfstate with versioning and encryption.
+#### Uncomment `backend.tf` and apply the Terraform configuration again.  `remote_state.tf` is creating remote cloud storage for tfstate with versioning and encryption.
 
 ### Required APIs
-Enable the following APIs for the project:
+#### Enable the following APIs for the project:
 - Compute API
 - Kubernetes Engine API
 - Storage API
@@ -106,7 +106,7 @@ Use `gcloud auth application-default login` for authentication. Adjust service a
 Change MongoDB credentials in `modules/mongodb/mongodb_secret.tf`. The Kubernetes Secret is encoded by default.
 
 ### CIDR Range Configuration
-Ensure the firewall protects all ranges and that the Google Function can access the Kubernetes endpoint to reach MongoDB via the MongoDB URI.
+#### Ensure the firewall protects all ranges and that the Google Function can access the Kubernetes endpoint to reach MongoDB via the MongoDB URI.
 
 ### MongoDB Keyfile for ReplicaSet Authentication
 Consider generating your own keyfile if there are issues with the existing one. This could be used for higher security and additional authentication.
