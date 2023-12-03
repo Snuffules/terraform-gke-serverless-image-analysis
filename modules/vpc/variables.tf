@@ -28,10 +28,5 @@ variable "restricted_services" {
   ]
 }
 
-/* variable "k8s_ep" {
-#  type        = number    
-}
- */
-
 variable "load_balancer_ip" {
 }
