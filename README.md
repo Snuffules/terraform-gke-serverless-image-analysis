@@ -19,7 +19,7 @@ This repository contains Terraform configuration for deploying a MongoDB instanc
 ## Pvc and persistand disk usage.
 - Daily regional backups enabled at 04:00AM.
 - Metrics for persistent volume utilization created.
-- Metric Alert to report above 80%: in progress...
+- Metric Alert to report above 80%: Done `</modules/metrics_alert>`
 ### If you need more size for pvc storage, simply change the size and Expansion future of kubernetes will do the rest.
 `<allowVolumeExpansion = true  >` this option in storage class `<modules/storage_pvc/storage_class.tf>` will allow resize of your pvc without any downtime or data loss.
 This feature allows you to simply edit your PersistentVolumeClaim (PVC) objects and specify a new size in the PVC spec. Kubernetes will then automatically expand the volume using the storage backend and also expand the underlying file system in-use by the Pod without requiring any downtime.
@@ -108,6 +108,7 @@ This configuration is common and recommended when you need external access to th
 - VPC Access allows Cloud Functions to access MongoDB.
 - Firewall applied to all private networks and includes Load Balancer. 
 - Automatically create a new database and collection upon inserting a new document. 
+- K8s epansion is enabled on storage class, so it could be expanded if needed without downtime or dataloss.
 
 ### Mongodb-key:
 #### Use of mongodb-keyfile compliments user and password authentication.
@@ -207,11 +208,10 @@ Snap
 - Update the JSON data for source and destination buckets in Cloud Functions if needed.
 
 ## To Do
-- Assign service account permissions.
-- Verify the usage of some variables.
-- Add backup for pvc for disaster recovery
-- Add alarms for storage and implement autoscale policy triggered by alarm
-- Add addiitonal monitoring
+- Add backup for pvc for disaster recovery -Done with snapshot
+- Add alarms for storage - Done
+- Implement autoscale policy triggered by alarm - this is not possible on Google cloud. epansion is enabled on storage class, so it could be expanded if needed without downtime.
+- Add addiitonal monitoring - Done added pvc alert for 80% full and email notification channel
 - Add visual Dashboards to represent MongoDB record numbers
 - Add indexing based on violence_score record 1-10
   
