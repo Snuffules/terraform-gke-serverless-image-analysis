@@ -11,7 +11,7 @@ resource "kubernetes_persistent_volume" "mongodb_pv" {
   }
   spec {
     capacity = {
-      storage = "10Gi"
+      storage = "24Gi"
     }
     access_modes = ["ReadWriteMany"]
     persistent_volume_source {
