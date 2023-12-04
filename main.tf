@@ -51,6 +51,11 @@ module "test_images" {
   source = "./modules/test_images"
   depends_on = [module.img_analysis, time_sleep.wait_60_seconds] #To ensure function is started and ready
 }
- 
+
+module "metrics" {
+  source = "./modules/metrics"
+  depends_on = [module.img_analysis] #To ensure metric descriptor is created and started is started. Couild take up to 10 mins
+}
+
 
 
