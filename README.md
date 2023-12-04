@@ -159,7 +159,9 @@ In Kubernetes secret resource `<modules/mongodb/mongo_secret.tf>`, you’re stor
 If you’re using both a keyfile and a username/password for authentication, you would still include the username and password in the connection string. The keyfile does not replace the username and password in the connection string.
 
 ### Buildx
-- This is suggested to use when to use, instead of docker build(deprecated): `<https://github.com/docker/buildx#manual-download>`
+- You will need to install this instead of docker build(deprecated): `<https://github.com/docker/buildx#manual-download>`
+####  From official docs:
+- Docker v23.0 now uses BuildKit by default to build Linux images, and uses the Buildx open_in_new CLI component for docker build.
 
 ### Remote State Configuration
 #### Uncomment `backend.tf` and apply the Terraform configuration again.  `remote_state.tf` is creating remote cloud storage for tfstate with versioning and encryption.
