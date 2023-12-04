@@ -17,9 +17,9 @@ This repository contains Terraform configuration for deploying a MongoDB instanc
 - In this case, since we are using MongoDB which is a stateful application, using a StatefulSet is the appropriate choice.
 
 ## Pvc and persistand disk usage.
-Daily regional backups enabled at 04:00AM.
-Metrics for persistent volume utilization created.
-Metric Alert to report above 80%: in progress...
+- Daily regional backups enabled at 04:00AM.
+- Metrics for persistent volume utilization created.
+- Metric Alert to report above 80%: in progress...
 ### If you need more size for pvc storage, simply change the size and Expansion future of kubernetes will do the rest.
 `<allowVolumeExpansion = true  >` this option in storage class `<modules/storage_pvc/storage_class.tf>` will allow resize of your pvc without any downtime or data loss.
 This feature allows you to simply edit your PersistentVolumeClaim (PVC) objects and specify a new size in the PVC spec. Kubernetes will then automatically expand the volume using the storage backend and also expand the underlying file system in-use by the Pod without requiring any downtime.
