@@ -32,7 +32,23 @@ resource "google_monitoring_metric_descriptor" "pod_volume_used_bytes" {
   type        = "custom.googleapis.com/pod/volume/used_bytes"
   metric_kind = "GAUGE"
   value_type  = "INT64"
+  labels {
+    key         = "volume_name"
+    value_type  = "STRING"
+    description = "mongodb-volume"
+  }
 
+  labels {
+    key         = "persistentvolumeclaim_name"
+    value_type  = "STRING"
+    description = "mongodb-volume"
+  }
+
+  labels {
+    key         = "persistentvolumeclaim_namespace"
+    value_type  = "STRING"
+    description = "mongodb"
+  }
   // Repeat the labels as in the previous resource
 }
 
@@ -43,7 +59,23 @@ resource "google_monitoring_metric_descriptor" "pod_volume_utilization" {
   type        = "custom.googleapis.com/pod/volume/utilization"
   metric_kind = "GAUGE"
   value_type  = "DOUBLE"
+  labels {
+    key         = "volume_name"
+    value_type  = "STRING"
+    description = "mongodb-volume"
+  }
 
+  labels {
+    key         = "persistentvolumeclaim_name"
+    value_type  = "STRING"
+    description = "mongodb-volume"
+  }
+
+  labels {
+    key         = "persistentvolumeclaim_namespace"
+    value_type  = "STRING"
+    description = "mongodb"
+  }
   // Repeat the labels as in the previous resources
 }
 
