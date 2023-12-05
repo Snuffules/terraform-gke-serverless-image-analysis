@@ -4,7 +4,7 @@
 ## Overview
 This repository contains Terraform configuration for deploying a MongoDB instance on Google Kubernetes Engine (GKE) with a Google Cloud Function for image analysis. The setup includes a VPC Access Connector for secure communication.
 
-## StatefulSet as deployment option chosen. Why not just Deployment or ReplicaSet?
+## StatefulSet as the deployment option was chosen. Why not just Deployment or ReplicaSet?
 ### Reasons:
 - When you use a StatefulSet, you don’t need a ReplicaSet.
 
