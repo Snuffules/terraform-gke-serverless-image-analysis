@@ -138,7 +138,7 @@ This configuration is common and recommended when you need external access to th
 - Endpoints Private Network IP Addresses, `ip_cidr_range`: `10.64.0.0/20`
 - VPC Access Connector `ip_cidr_range`: `10.8.0.0/28`
 
-### Web application firewall to prevent external attempts to disrupt the service like DOS or DDOS attacks.
+### Web application firewall to prevent external attempts to disrupt the service like DOS or DDOS attacks. `<modules/vpc/waf.tf>`
 resource "google_compute_security_policy" "waf_policy" {
   name        = "waf-policy"
   description = "Web Application Firewall Policy"
