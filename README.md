@@ -266,6 +266,7 @@ variable "mongo_password" {
 - Eventarc API
 - Serverless VPC Access API
 - Connectors API
+- Cloud Filestore API
 
 ### CIDR Range Configuration
 #### Ensure the firewall protects all ranges; Confirm that Google Function can access the Kubernetes endpoint to reach MongoDB via the MongoDB URI.
