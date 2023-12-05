@@ -83,7 +83,7 @@ In summary, in a MongoDB Stateful set, there's a primary node for write operatio
 ### MongoDB URI
 #### Working URI format:
 Current code represents automaticaly fetching LoadBalancer IP address and use it in mongo uri as seen here:
-`<modules/zip_function/img_analysis.tf>`:
+`<modules/zip_function/img_analysis.tf>` line 108:
 MONGODB_URI           = "mongodb://mongouser:mongopassword@${var.load_balancer_ip}:27017/test?authSource=admin&authMechanism=SCRAM-SHA-256"
 
 #### `<mongodb://mongouser:mongopassword@<mongodb.svc.cluster.local>:27017/<test>?authSource=admin&authMechanism=SCRAM-SHA-256>`
