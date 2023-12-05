@@ -22,7 +22,7 @@ This repository contains Terraform configuration for deploying a MongoDB instanc
 - Metric Alert to report above 80%: Done `</modules/metrics_alert>`
 ### If you need more size for pvc storage, simply change the size and Expansion future of kubernetes will do the rest.
 `<allowVolumeExpansion = true>` this option in storage class `<modules/storage_pvc/storage_class.tf>` will allow you to resize your pvc storage without any downtime or data loss.
-This feature allows you to simply edit your PersistentVolumeClaim (PVC) objects and specify a new size in the PVC spec. Kubernetes will then automatically expand the volume using the storage backend and also expand the underlying file system in-use by the Pod without requiring any downtime.
+This feature provide you with the option to simply to edit your PersistentVolumeClaim (PVC) objects and specify a new size in the PVC spec. Kubernetes will then automatically expand the volume using the storage backend and also expand the underlying file system in-use by the Pod without requiring any downtime.
 
 ### Why we use persistent volume claim:
 - In a StatefulSet, each pod gets its own Persistent Volume Claim (PVC), which means each pod will have its own storage. This is different from Deployments or ReplicaSets, where the pods share storage.
@@ -31,7 +31,34 @@ This feature allows you to simply edit your PersistentVolumeClaim (PVC) objects 
 - When you have 2 replicas in a StatefulSet, you will have 2 pods, each with its own PVC. This means that each pod will have its own separate copy of the database.
 
 ### No duplication, but replication of data:
-- In a MongoDB replica set, one node is the primary node that receives all write operations, while the other nodes are secondary nodes that replicate the primary node’s data set. This means that the database records will not duplicate across the PVCs, but rather, the secondary nodes will have a copy of the data from the primary node.
+- In a MongoDB Stateful set, one node is the primary node that receives all write operations, while the other nodes are secondary nodes that replicate the primary node’s data set. This means that the database records will not duplicate across the PVCs, but rather, the secondary nodes will have a copy of the data from the primary node.
+
+### In a MongoDB Stateful set, the architecture is designed to ensure data integrity and high availability. Here's how it works:
+
+#### Primary Node:
+- This is the main node that handles all write operations. When data is written to the primary node, it is responsible for processing and storing this information.
+
+#### Secondary Nodes:
+- These nodes are essentially replicas of the primary node. They do not directly handle write operations. Instead, their main role is to replicate the data set of the primary node.
+
+#### Data Replication Process:
+- Whenever a change is made in the primary node (like a new record being added or an existing record being updated), this change is automatically replicated across the secondary nodes. This replication process ensures that each secondary node has an exact copy of the data set present in the primary node.
+
+#### Purpose of Replication:
+- The replication is crucial for a few reasons:
+
+#### High Availability:
+- In case the primary node fails, one of the secondary nodes can be promoted to become the new primary node, ensuring that the database remains operational.
+Data Redundancy: It provides a safeguard against data loss. If the primary node's data is corrupted or lost, the data can be recovered from the secondary nodes.
+No Data Duplication Across PVCs: It's important to note that this replication process does not lead to duplication of records across the Persistent Volume Claims (PVCs). Each node (primary or secondary) has its own PVC, but the data across these PVCs is synchronized, not duplicated. The same record will not be stored multiple times across different nodes; instead, it's just mirrored from the primary to the secondary nodes.
+
+#### Read Operations:
+- While the primary node handles all writes, read operations can be distributed across the primary and secondary nodes. This can help in load balancing and improving read performance.
+
+#### Consistency Model:
+- MongoDB typically uses a strong consistency model, meaning that the read operations on secondary nodes will reflect the most recent write operations once the replication is complete.
+
+In summary, in a MongoDB Stateful set, there's a primary node for write operations and secondary nodes for replication. This setup ensures high availability, data redundancy, and consistency, without leading to duplication of data across the nodes.
 
 ### Data peristancy:
 - The data will persist on the PVCs, and the PVCs will exist independently of the pod lifecycle. This means that even if a pod dies, the PVC will still exist and can be mounted to another pod. This is particularly useful for stateful applications like databases, where data persistence is important.
