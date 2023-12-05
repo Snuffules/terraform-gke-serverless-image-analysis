@@ -213,7 +213,7 @@ When deploying MongoDB in Kubernetes using StatefulSets, the keyfile is typicall
 - Keyfile Owner: The keyfile should be owned by the mongodb. If you’re running MongoDB as a service, this user is typically mongodb or mongod.
 - When using a keyfile for authentication in a MongoDB replica set, the keyfile itself `<mongodb_keyfile.tf>`is the shared secret used for authentication, not the username and password.
 - Our choice for this solution:
-If you want to use both a keyfile and a username/password for authentication, you would need to configure MongoDB to support this. This typically involves creating a MongoDB user that has the necessary roles and privileges, and then using this user’s credentials along with the keyfile when connecting to the MongoDB StatefulSet.
+- If you want to use both a keyfile and a username/password for authentication, you would need to configure MongoDB to support this. This typically involves creating a MongoDB user that has the necessary roles and privileges, and then using this user’s credentials along with the keyfile when connecting to the MongoDB StatefulSet.
 
 #### user and password stored with sensitive = true option:
 ```hcl
