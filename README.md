@@ -120,7 +120,7 @@ This configuration is common and recommended when you need external access to th
 ### Service account permissions are used only once in second function
 
 ### Cloud function v1 and v2
-#### img_analysis cloudfunction (v1) - implemented a delay, to ensure pubsun topic is ready to accept messages
+#### img_analysis cloudfunction (v1) - implemented a delay, to ensure pubsub topic is ready to accept messages
 - To implement VPC serverless access connect, so cloudfunction can authenticate and insert records into MongoDB `<db>` and `<collection>` (`<mongodb>` and `<violence_score>` respectively, change to your preference, if needed).
 
 #### img_processing cloudfunction (v2) 
