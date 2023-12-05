@@ -215,7 +215,7 @@ When deploying MongoDB in Kubernetes using StatefulSets, the keyfile is typicall
 - Our choice for this solution:
 - If you want to use both a keyfile and a username/password for authentication, you would need to configure MongoDB to support this. This typically involves creating a MongoDB user that has the necessary roles and privileges, and then using this user’s credentials along with the keyfile when connecting to the MongoDB StatefulSet.
 
-#### user and password stored with sensitive = true option:
+- user and password stored with sensitive = true option:
 `<modules/mongodb/mongo_secret.tf>`
 ```hcl
   data = {
@@ -235,9 +235,9 @@ variable "mongo_password" {
     sensitive = true    
 }
 ```
-##### Use of user and password consideration:
-In Kubernetes secret resource `<modules/mongodb/mongo_secret.tf>`, you’re storing the MongoDB username and password. This is good for scenarios where you want to authenticate with a username and password.
-If you’re using both a keyfile and a username/password for authentication, you would still include the username and password in the connection string. The keyfile does not replace the username and password in the connection string.
+#### Use of user and password consideration:
+- In Kubernetes secret resource `<modules/mongodb/mongo_secret.tf>`, you’re storing the MongoDB username and password. This is good for scenarios where you want to authenticate with a username and password.
+- If you’re using both a keyfile and a username/password for authentication, you would still include the username and password in the connection string. The keyfile does not replace the username and password in the connection string.
 
 ### Buildx
 - You will need to install this instead of docker build(deprecated): `<https://github.com/docker/buildx#manual-download>`
