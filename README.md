@@ -83,7 +83,8 @@ In summary, in a MongoDB Stateful set, there's a primary node for write operatio
 - MongoDB StatefulSet: 1 minute
 - VPC Access Connector: 2 minutes
 - Image Analysis Function: 1:30 minutes
-- Google Filestore 3:45 minutes 
+- Google Filestore 3:45 minutes # 1024Gb is minimum requirement
+- Persistent Volume Claim # Should match the size of filestore
 - +~2 minutes for all other components
 
 ## Configuration Details
