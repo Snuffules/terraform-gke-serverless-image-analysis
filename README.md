@@ -204,24 +204,24 @@ The mongodb-keyfile is used for intra-cluster authentication in a MongoDB Replic
 
 When deploying MongoDB in Kubernetes using StatefulSets, the keyfile is typically stored as a Kubernetes Secret and mounted into the containers as a volume. This approach secures the keyfile and makes it easily accessible to the MongoDB instances in your cluster.
 
-### Mongodb-authentication. You have to choose one of the following:
+### Mongodb-authentication. You can use one of the following or both(this solution make use of both for higher level of security as explain above):
 #### mongodb-keyfile used from mongodb replicas and encoded during creation (openssl rand -base64 756 > mongodb-keyfile):
   data = {
     keyfile = "${path.module}/mongodb-keyfile"
   }
 ##### Use of mongodb-keyfile considerations:
-The MongoDB keyfile should be owned by the MongoDB user. In the context of a Kubernetes deployment, this would typically be the user that the MongoDB container is running as.
-
- When using a keyfile for authentication in a MongoDB replica set, the keyfile itself `<mongodb_keyfile.tf>`is the shared secret used for authentication, not the username and password.
-
-If you want to use both a keyfile and a username/password for authentication, you would need to configure MongoDB to support this. This typically involves creating a MongoDB user that has the necessary roles and privileges, and then using this user’s credentials along with the keyfile when connecting to the MongoDB replica set.
+- Keyfile Owner: The keyfile should be owned by the mongodb. If you’re running MongoDB as a service, this user is typically mongodb or mongod.
+- When using a keyfile for authentication in a MongoDB replica set, the keyfile itself `<mongodb_keyfile.tf>`is the shared secret used for authentication, not the username and password.
+- Our choice for this solution:
+If you want to use both a keyfile and a username/password for authentication, you would need to configure MongoDB to support this. This typically involves creating a MongoDB user that has the necessary roles and privileges, and then using this user’s credentials along with the keyfile when connecting to the MongoDB StatefulSet.
 
 #### user and password stored with sensitive = true option:
+```hcl
   data = {
     username = var.mongo_user
     password = var.mongo_password
   }
-  
+```  
 ##### Use of user and password consideration:
 In Kubernetes secret resource `<modules/mongodb/mongo_secret.tf>`, you’re storing the MongoDB username and password. This is good for scenarios where you want to authenticate with a username and password.
 If you’re using both a keyfile and a username/password for authentication, you would still include the username and password in the connection string. The keyfile does not replace the username and password in the connection string.
