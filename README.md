@@ -251,7 +251,12 @@ Snap
 - Add addiitonal monitoring - Done added pvc alert for 80% full and email notification channel
 - Add visual Dashboards to represent MongoDB record numbers
 - Add indexing based on violence_score record 1-10
-- Global vars? Set only once in root?
+- Global vars? Set only once in root:
+
+module "example_module" {
+  source = "./modules/example_module"
+  module_variable = var.example_variable
+}
   
 ## Successful MongoDB Insertion
 Example of a successful record insertion into MongoDB.
