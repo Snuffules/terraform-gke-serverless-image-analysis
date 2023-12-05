@@ -121,7 +121,7 @@ resource "kubernetes_stateful_set" "mongodb_statefulset" {
         name = "mongodb-volume"
       }
       spec {
-        access_modes = ["ReadWriteOnce"]
+        access_modes = ["ReadWriteMany"]
         resources {
           requests = {
             storage = var.storage_size
