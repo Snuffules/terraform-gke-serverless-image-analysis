@@ -176,10 +176,11 @@ resource "google_compute_security_policy" "waf_policy" {
 - Automatically create a new database and collection upon inserting a new document. 
 - K8s epansion is enabled on storage class, so it could be expanded if needed without downtime or dataloss.
 
-### Mongodb-key:
+### Mongodb-key: 
 #### Use of mongodb-keyfile compliments user and password authentication.
-- openssl rand -base64 756 > mongodb-keyfile
-- Already created, could consider generate your own if there is an issue.
+`<modules/docker/mongodb-keyfile>`; `<modules/mongodb/mongodb-keyfile>`
+- Command used to create keytfile: `<openssl rand -base64 756 > mongodb-keyfile>`
+- You should most definately generate your own, to ensure uniqueness and security of your keyfile.
 - Keyfile Owner: The keyfile should be owned by the MongoDB user. If you’re running MongoDB as a service, this user is typically mongodb or mongod. Please ensure that your keyfile is owned by the correct user. In this solution  user is: mongouser
 
 #### Reasons behind using a keyfile to secure your gke cluster:
