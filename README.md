@@ -181,7 +181,8 @@ resource "google_compute_security_policy" "waf_policy" {
 `<modules/docker/mongodb-keyfile>`; `<modules/mongodb/mongodb-keyfile>`
 - Command used to create keytfile: `<openssl rand -base64 756 > mongodb-keyfile>`
 - You should most definately generate your own, to ensure uniqueness and security of your keyfile.
-- Keyfile Owner: The keyfile should be owned by the MongoDB user. If you’re running MongoDB as a service, this user is typically mongodb or mongod. Please ensure that your keyfile is owned by the correct user. In this solution  user is: mongouser
+- Keyfile Owner: The keyfile should be owned by the mongodb. If you’re running MongoDB as a service, this user is typically mongodb or mongod.
+- CMD command: we start mongo deamon service with mongod and keyfile as method of authentication.
 
 #### Reasons behind using a keyfile to secure your gke cluster:
 The mongodb-keyfile is used for intra-cluster authentication in a MongoDB Replica Set or Sharded Cluster. It serves as a shared secret between the members of the cluster, ensuring that only authorized nodes can join and participate in the cluster. This keyfile is crucial for maintaining the security and integrity of the cluster.
