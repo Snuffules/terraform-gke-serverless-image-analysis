@@ -121,11 +121,17 @@ This configuration is common and recommended when you need external access to th
 
 ### Cloud function v1 and v2
 #### img_analysis cloudfunction (v1) - implemented a delay, to ensure pubsub topic is ready to accept messages
+#### Why using Cloud function v1 isn`t that the old version?
 - To implement VPC serverless access connect, so cloudfunction can authenticate and insert records into MongoDB `<db>` and `<collection>` (`<mongodb>` and `<violence_score>` respectively, change to your preference, if needed).
+- This option is available only for v1 Cloud functions.
 
 #### img_processing cloudfunction (v2) 
-- Initially, both functions was v2. img_analysis refactoring to v1 allows use of VPC Serverless Access Connector, therefore was the right call. Cloudfunction2 options are more complicated and go beyond serveless concept.
+#### Why Cloud function v2? You said, that there is a problem with v2 in previous statement?
+- Initially, both functions was designed as v2. img_analysis refactoring to v1 allows use of VPC Serverless Access Connector, therefore was the right call. Cloudfunction2 options are more complicated and go beyond serveless concept.
 - Decision to leave img_processing cloud function as v2 seems as a good idea (for now at least) to test the concept of v1 and v2 functions. They work independent from each otehr, so there is no funtionality issues with this workflow.
+- So, why not? To test functionality and usage/issues with v2 as well.
+- Cloud function v2 bring new features better performance(?), but doesn`t have backward compatibily with such feature as VPC Serverless Access connector.
+- New versions have to be tested before actual usage. Not always new versions are the better choice.
 
 ### Network Configurations
 - Services Private Network IP Addresses, CIDR Valid Ranges: `10.68.0.0/28`
