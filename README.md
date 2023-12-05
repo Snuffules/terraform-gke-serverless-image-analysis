@@ -68,6 +68,7 @@ In summary, in a MongoDB Stateful set, there's a primary node for write operatio
 - MongoDB StatefulSet: 1 minute
 - VPC Access Connector: 2 minutes
 - Image Analysis Function: 1:30 minutes
+- +~2 minutes for all other components
 
 ## Configuration Details
 
