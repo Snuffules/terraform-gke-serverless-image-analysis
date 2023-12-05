@@ -85,8 +85,11 @@ In summary, in a MongoDB Stateful set, there's a primary node for write operatio
 
 #### `<mongodb://mongouser:mongopassword@<mongodb.svc.cluster.local>:27017/<test>?authSource=admin&authMechanism=SCRAM-SHA-256>`
 
+
+- Replace `<mongouser:mongopassword>` if you want to use your own, but you have to change it in the code as well: `<modules/mongodb
+/mongo_secret.tf>`
 - Replace `<mongodb.svc.cluster.local>` with the Load Balancer IP or directly with the Pod IP endpoint for `mongodb-0`.
-- Database name `<test>` can be replaced with `<default>` or `<config>`.
+- Database name `<test>` can be replaced with `<default>` or `<config>`. Should work without selecting a database as well (it will use default, which is test).
 
 ### Gke reason to use enable_private_nodes and why we do not use private_endpoint for this solution:
 
