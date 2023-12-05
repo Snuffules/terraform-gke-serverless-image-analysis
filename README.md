@@ -49,8 +49,8 @@ This feature provide you with the option to simply to edit your PersistentVolume
 
 #### High Availability:
 - In case the primary node fails, one of the secondary nodes can be promoted to become the new primary node, ensuring that the database remains operational.
-Data Redundancy: It provides a safeguard against data loss. If the primary node's data is corrupted or lost, the data can be recovered from the secondary nodes.
-No Data Duplication Across PVCs: It's important to note that this replication process does not lead to duplication of records across the Persistent Volume Claims (PVCs). Each node (primary or secondary) has its own PVC, but the data across these PVCs is synchronized, not duplicated. The same record will not be stored multiple times across different nodes; instead, it's just mirrored from the primary to the secondary nodes.
+- Data Redundancy: It provides a safeguard against data loss. If the primary node's data is corrupted or lost, the data can be recovered from the secondary nodes.
+- No Data Duplication Across PVCs: It's important to note that this replication process does not lead to duplication of records across the Persistent Volume Claims (PVCs). Each node (primary or secondary) has its own PVC, but the data across these PVCs is synchronized, not duplicated. The same record will not be stored multiple times across different nodes; instead, it's just mirrored from the primary to the secondary nodes.
 
 #### Read Operations:
 - While the primary node handles all writes, read operations can be distributed across the primary and secondary nodes. This can help in load balancing and improving read performance.
