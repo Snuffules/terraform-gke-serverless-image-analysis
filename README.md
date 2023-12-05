@@ -268,10 +268,10 @@ variable "mongo_password" {
 - Connectors API
 
 ### CIDR Range Configuration
-#### Ensure the firewall protects all ranges and that the Google Function can access the Kubernetes endpoint to reach MongoDB via the MongoDB URI.
+#### Ensure the firewall protects all ranges; Confirm that Google Function can access the Kubernetes endpoint to reach MongoDB via the MongoDB URI.
 
-### MongoDB Keyfile for ReplicaSet Authentication
-Consider generating your own keyfile if there are issues with the existing one. This could be used for higher security and additional authentication.
+### MongoDB Keyfile for StatefulSet replicas intra-cluster authentication
+This is used for higher security and additional authentication.
 
 ### MongoDB Connection
 Official MongoDB connection string examples: [MongoDB Connection String Examples](https://www.mongodb.com/docs/manual/reference/connection-string/#connection-string-examples)
@@ -280,13 +280,15 @@ Official MongoDB connection string examples: [MongoDB Connection String Examples
 For details on connecting Cloud Functions to a VPC, visit [Connecting Cloud Functions to a VPC](https://cloud.google.com/functions/docs/networking/connecting-vpc).
 
 ### Serverless VPC Access API
-Configure the VPC connector in Cloud Functions for internal access.
+Already configured for this solution.
+If you want to configure your own VPC connector in Cloud Functions for internal access, change should follow this valid cidr ranges: 
+- VPC Access Connector `ip_cidr_range`: `10.8.0.0/28`
 
 ### Backup and recovery
 - Daily regional backups enabled at 04:00AM. `<modules/storage_pvc/regional_backup.tf>`
 
 ### Additional Configuration Notes
-- Consider using Cloud Run as an API Gateway to GKE.
+- Using Cloud Run as an API Gateway to GKE. This is more complex and involve additional resources, therefore for this solution VPC Serverless Access connector and cloud function v1 was chosen.
 - If `enable_private_endpoint` is set to `true`, ensure proper configuration for accessing the GKE API. Bastion machine or VPN is needed. Not applicable for this solution.
 - Update the JSON data for source and destination buckets in Cloud Functions if needed.
 
