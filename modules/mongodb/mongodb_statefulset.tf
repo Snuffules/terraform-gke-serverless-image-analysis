@@ -9,7 +9,7 @@ resource "kubernetes_stateful_set" "mongodb_statefulset" {
   }
 
   spec {
-    replicas = 2  # Set the number of replicas in the replica set
+    replicas = 3  # Set the number of replicas in the replica set
 
     selector {
       match_labels = {
