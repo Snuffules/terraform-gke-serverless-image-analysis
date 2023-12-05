@@ -19,7 +19,7 @@ This repository contains Terraform configuration for deploying a MongoDB instanc
 ## Pvc and persistand disk usage.
 - Daily regional backups enabled at 04:00AM.
 - Metrics for persistent volume utilization created.
-- Metric Alert to report above 80%: Done `</modules/metrics_alert>`
+- Metric Alert to report above 80%: Done `</modules/metrics/metrics_alert>`
 ### If you need more size for pvc storage, simply change the size and Expansion future of kubernetes will do the rest.
 `<allowVolumeExpansion = true>` this option in storage class `<modules/storage_pvc/storage_class.tf>` will allow you to resize your pvc storage without any downtime or data loss.
 This feature provide you with the option to simply to edit your PersistentVolumeClaim (PVC) objects and specify a new size in the PVC spec. Kubernetes will then automatically expand the volume using the storage backend and also expand the underlying file system in-use by the Pod without requiring any downtime.
@@ -239,7 +239,7 @@ Snap
 
 ## To Do
 - Add backup for pvc for disaster recovery -Done with snapshot
-- Add alarms for storage - Done `</modules/metrics_alert>`
+- Add alarms for storage - Done `</modules/metrics/metrics_alert>`
 - Implement autoscale policy triggered by alarm - this is not possible on Google cloud. epansion is enabled on storage class, so it could be expanded if needed without downtime.
 - Add addiitonal monitoring - Done added pvc alert for 80% full and email notification channel
 - Add visual Dashboards to represent MongoDB record numbers
