@@ -81,14 +81,16 @@ In summary, in a MongoDB Stateful set, there's a primary node for write operatio
 - kubectl exec -ti mongodb-0 -n mongodb -- mongosh 
 
 ### MongoDB URI
-#### Working URI format:
+#### Working URI format used in this solution:
 Current code represents automaticaly fetching LoadBalancer IP address and use it in mongo uri as seen here:
 `<modules/zip_function/img_analysis.tf>` line 108:
 MONGODB_URI           = "mongodb://mongouser:mongopassword@${var.load_balancer_ip}:27017/test?authSource=admin&authMechanism=SCRAM-SHA-256"
 
-#### `<mongodb://mongouser:mongopassword@<mongodb.svc.cluster.local>:27017/<test>?authSource=admin&authMechanism=SCRAM-SHA-256>`
-
-- Replace `<mongouser:mongopassword>` if you want to use your own, but you have to change it in the code as well: `<modules/mongodb
+#### Official guidance: 
+- This will not work as the cluster is private and Cloud function is calling exposed IP adress from LoadBalancer.
+For the intend to document official example:
+`<mongodb://<user>:<password>@<mongodb.svc.cluster.local>:27017/<test>?authSource=admin&authMechanism=SCRAM-SHA-256>`
+- Replace `<user:password>` with yours, but you have to change it in the code as well: `<modules/mongodb
 /mongo_secret.tf>`
 - Replace `<mongodb.svc.cluster.local>` with the Load Balancer IP or directly with the Pod IP endpoint for `mongodb-0`.
 - Database name `<test>` can be replaced with `<default>` or `<config>`. Should work without selecting a database as well (it will use default, which is test).
