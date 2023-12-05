@@ -22,6 +22,15 @@ Change MongoDB credentials in `modules/mongodb/mongodb_secret.tf`. The Kubernete
 
 - In this case, since we are using MongoDB which is a stateful application, using a StatefulSet is the appropriate choice.
 
+  ```hcl
+            env {
+            name  = "MONGO_INITDB_REPLICA_SET_NAME"
+            value = "rs0"  # sets the name of the MongoDB replica set. 
+            #This is a part of MongoDB's replication mechanism,
+            #where multiple MongoDB instances form a replica set to ensure data redundancy and high availability.
+          }
+  ```
+
 ## Pvc and persistand disk usage.
 - Daily regional backups enabled at 04:00AM.
 - Metrics for persistent volume utilization created.
