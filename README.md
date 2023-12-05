@@ -139,7 +139,7 @@ This configuration is common and recommended when you need external access to th
 - VPC Access Connector `ip_cidr_range`: `10.8.0.0/28`
 
 ### Web application firewall to prevent external attempts to disrupt the service like DOS or DDOS attacks.
-
+```hcl
 resource "google_compute_security_policy" "waf_policy" {
   name        = "waf-policy"
   description = "Web Application Firewall Policy"
@@ -168,7 +168,7 @@ resource "google_compute_security_policy" "waf_policy" {
     description = "Deny all other traffic"
   }
 }
-
+```
 ### VPC Access and Firewall
 - VPC Access allows Cloud Functions to access MongoDB.
 - Firewall applied to all private networks and includes Load Balancer. 
