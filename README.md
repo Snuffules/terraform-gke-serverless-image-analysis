@@ -126,7 +126,7 @@ This configuration is common and recommended when you need external access to th
 - This option is available only for v1 Cloud functions.
 
 #### img_processing cloudfunction (v2) 
-#### Why Cloud function v2? You said, that there is a problem with v2 in previous statement?
+#### Why Cloud function v2? Didn`t you just said, that there is a problem with v2 in previous statement?
 - Initially, both functions was designed as v2. img_analysis refactoring to v1 allows use of VPC Serverless Access Connector, therefore was the right call. Cloudfunction2 options are more complicated and go beyond serveless concept.
 - Decision to leave img_processing cloud function as v2 seems as a good idea (for now at least) to test the concept of v1 and v2 functions. They work independent from each otehr, so there is no funtionality issues with this workflow.
 - So, why not? To test functionality and usage/issues with v2 as well.
