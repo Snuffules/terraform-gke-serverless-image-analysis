@@ -82,9 +82,9 @@ In summary, in a MongoDB Stateful set, there's a primary node for write operatio
 
 ### MongoDB URI
 #### Working URI format:
+Current code represents automaticaly fetching LoadBalancer IP address(and use it )
 
 #### `<mongodb://mongouser:mongopassword@<mongodb.svc.cluster.local>:27017/<test>?authSource=admin&authMechanism=SCRAM-SHA-256>`
-
 
 - Replace `<mongouser:mongopassword>` if you want to use your own, but you have to change it in the code as well: `<modules/mongodb
 /mongo_secret.tf>`
