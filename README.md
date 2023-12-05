@@ -247,7 +247,7 @@ Snap
 ## To Do
 - Add backup for pvc for disaster recovery -Done with snapshot
 - Add alarms for storage - Done `</modules/metrics/metrics_alert>`
-- Implement autoscale policy triggered by alarm - this is not possible on Google cloud. epansion is enabled on storage class, so it could be expanded if needed without downtime.
+- Implement autoscale policy triggered by alarm - this is not possible on Google cloud. expansion is enabled on storage class, so it could be expanded if needed without downtime.
 - Add addiitonal monitoring - Done added pvc alert for 80% full and email notification channel
 - Add visual Dashboards to represent MongoDB record numbers
 - Add indexing based on violence_score record 1-10
