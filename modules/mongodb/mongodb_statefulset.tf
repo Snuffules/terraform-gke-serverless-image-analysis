@@ -54,7 +54,9 @@ resource "kubernetes_stateful_set" "mongodb_statefulset" {
           }
           env {
             name  = "MONGO_INITDB_REPLICA_SET_NAME"
-            value = "rs0"  # Name of the replica set
+            value = "rs0"  # sets the name of the MongoDB replica set. 
+            #This is a part of MongoDB's replication mechanism,
+            #where multiple MongoDB instances form a replica set to ensure data redundancy and high availability.
           }
 
           # Additional environment variable for the keyfile
