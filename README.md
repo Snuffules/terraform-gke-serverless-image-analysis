@@ -4,6 +4,12 @@
 ## Overview
 This repository contains Terraform configuration for deploying a MongoDB instance on Google Kubernetes Engine (GKE) with a Google Cloud Function for image analysis. The setup includes a VPC Access Connector for secure communication. Google Vision is the prefered choise for image analysis because of its cloud native nature and it is a simple, yet powerful tool to use.
 
+### Authentication and Access
+Use `gcloud auth application-default login` for authentication. Adjust service accounts for compute and app as needed.
+
+### MongoDB Secret Configuration
+Change MongoDB credentials in `modules/mongodb/mongodb_secret.tf`. The Kubernetes Secret is encoded by default.
+
 ## StatefulSet as the deployment option was chosen. Why not just Deployment or ReplicaSet?
 ### Reasons:
 - When you use a StatefulSet, you don’t need a ReplicaSet.
@@ -261,12 +267,6 @@ variable "mongo_password" {
 - Serverless VPC Access API
 - Connectors API
 
-### Authentication and Access
-Use `gcloud auth application-default login` for authentication. Adjust service accounts for compute and app as needed.
-
-### MongoDB Secret Configuration
-Change MongoDB credentials in `modules/mongodb/mongodb_secret.tf`. The Kubernetes Secret is encoded by default.
-
 ### CIDR Range Configuration
 #### Ensure the firewall protects all ranges and that the Google Function can access the Kubernetes endpoint to reach MongoDB via the MongoDB URI.
 
@@ -283,7 +283,7 @@ For details on connecting Cloud Functions to a VPC, visit [Connecting Cloud Func
 Configure the VPC connector in Cloud Functions for internal access.
 
 ### Backup and recovery
-Snap 
+- Daily regional backups enabled at 04:00AM. `<modules/storage_pvc/regional_backup.tf>`
 
 ### Additional Configuration Notes
 - Consider using Cloud Run as an API Gateway to GKE.
