@@ -2,7 +2,7 @@
 # MongoDB on GKE with Cloud Functions and Google Vision AI
 
 ## Overview
-This repository contains Terraform configuration for deploying a MongoDB instance on Google Kubernetes Engine (GKE) with a Google Cloud Function for image analysis. The setup includes a VPC Access Connector for secure communication.
+This repository contains Terraform configuration for deploying a MongoDB instance on Google Kubernetes Engine (GKE) with a Google Cloud Function for image analysis. The setup includes a VPC Access Connector for secure communication. Google Vision is the prefered choise for image analysis because of its cloud native nature and it id a simple, yet powerful tool to use.
 
 ## StatefulSet as the deployment option was chosen. Why not just Deployment or ReplicaSet?
 ### Reasons:
