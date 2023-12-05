@@ -122,7 +122,7 @@ This configuration is common and recommended when you need external access to th
 ### Cloud function v1 and v2
 #### img_analysis cloudfunction (v1) - implemented a delay, to ensure pubsub topic is ready to accept messages
 #### Why using Cloud function v1 isn`t that the old version?
-- To implement VPC serverless access connect, so cloudfunction can authenticate and insert records into MongoDB `<db>` and `<collection>` (`<mongodb>` and `<violence_score>` respectively, change to your preference, if needed).
+- To implement VPC serverless access connect, so cloud function can authenticate and insert records into MongoDB `<db>` and `<collection>` (`<mongodb>` and `<violence_score>` respectively, change to your preference, if needed).
 - This option is available only for v1 Cloud functions.
 
 #### img_processing cloudfunction (v2) 
