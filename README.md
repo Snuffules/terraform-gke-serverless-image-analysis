@@ -40,7 +40,7 @@ Change MongoDB credentials in `modules/mongodb/mongodb_secret.tf`. The Kubernete
 This feature provide you with the option to simply to edit your PersistentVolumeClaim (PVC) objects and specify a new size in the PVC spec. Kubernetes will then automatically expand the volume using the storage backend and also expand the underlying file system in-use by the Pod without requiring any downtime.
 
 ### Why we use persistent volume claim:
-- In a StatefulSet, each pod gets its own Persistent Volume Claim (PVC), which means each pod will have its own storage. This is different from Deployments or ReplicaSets, where the pods share storage.
+- In a StatefulSet, each pod gets its own Persistent Volume Claim (PVC), which means each pod will have its own storage(That will probably cause issue with single storage source for mongodb cluster). This is different from Deployments or ReplicaSets, where the pods share storage.
 
 ### One active entrypoint, multiple copies of the database:
 - When you have 2 replicas in a StatefulSet, you will have 2 pods, each with its own PVC. This means that each pod will have its own separate copy of the database.
